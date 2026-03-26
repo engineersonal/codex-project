@@ -2,6 +2,10 @@
 
 PulseSpend is a polished single-page expense tracker built for daily personal finance use. It combines a vibrant dashboard, category insights, budget tracking, local currency formatting, and light/dark theme support in a lightweight frontend that runs directly in the browser.
 
+[Live demo](https://engineersonal.github.io/codex-project/)
+
+![PulseSpend application preview](./assets/pulsespend-preview.svg)
+
 ## Highlights
 
 - Add, review, filter, and delete daily expenses from a clean dashboard UI.
@@ -98,6 +102,22 @@ python -m http.server 8000
 ```
 
 Then visit `http://localhost:8000`.
+
+## GitHub Pages
+
+This repository is configured to deploy automatically to GitHub Pages with the workflow in [`.github/workflows/deploy-pages.yml`](./.github/workflows/deploy-pages.yml).
+
+Expected site URL:
+
+- `https://engineersonal.github.io/codex-project/`
+
+If GitHub Pages has not been enabled yet in the repository settings, open:
+
+1. `Settings`
+2. `Pages`
+3. Set the source to `GitHub Actions`
+
+After that, every push to `master` should republish the site automatically.
 
 ## How to Use
 
