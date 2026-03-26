@@ -1,0 +1,25 @@
+{
+  "name": "PulseSpend Expense Tracker",
+  "short_name": "PulseSpend",
+  "description": "A vibrant expense tracker for daily budgets, category insights, and local currency tracking.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef3ff",
+  "theme_color": "#131e45",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/pulsespend-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/pulsespend-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

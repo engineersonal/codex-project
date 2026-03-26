@@ -36,6 +36,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 });
 
 const today = new Date();
+let deferredInstallPrompt = null;
 
 const state = {
   expenses: loadExpenses(),
@@ -58,6 +59,7 @@ const elements = {
   expenseForm: document.getElementById("expenseForm"),
   budgetForm: document.getElementById("budgetForm"),
   seedDataButton: document.getElementById("seedDataButton"),
+  installButton: document.getElementById("installButton"),
   categoryFilter: document.getElementById("categoryFilter"),
   navItems: document.querySelectorAll(".nav-item"),
   viewSections: document.querySelectorAll("[data-section]"),
@@ -102,6 +104,7 @@ function boot() {
   elements.expenseForm.addEventListener("submit", handleExpenseSubmit);
   elements.budgetForm.addEventListener("submit", handleBudgetSubmit);
   elements.seedDataButton.addEventListener("click", handleSeedData);
+  elements.installButton.addEventListener("click", handleInstallClick);
   elements.countrySelect.addEventListener("change", handleCountryChange);
   elements.themeToggle.addEventListener("click", handleThemeToggle);
   elements.navItems.forEach((item) => {
@@ -114,6 +117,7 @@ function boot() {
     renderTransactions();
   });
 
+  registerPwa();
   render();
 }
 
@@ -407,9 +411,53 @@ function handleThemeToggle() {
   applyTheme();
 }
 
+async function handleInstallClick() {
+  if (!deferredInstallPrompt) {
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  const { outcome } = await deferredInstallPrompt.userChoice;
+
+  if (outcome === "accepted") {
+    hideInstallButton();
+  }
+
+  deferredInstallPrompt = null;
+}
+
 function applyTheme() {
   document.body.dataset.theme = state.theme;
   elements.themeToggle.textContent = state.theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+  document.querySelector('meta[name="theme-color"]').setAttribute(
+    "content",
+    state.theme === "dark" ? "#09101f" : "#131e45"
+  );
+}
+
+function registerPwa() {
+  if ("serviceWorker" in navigator && window.isSecureContext) {
+    navigator.serviceWorker.register("./sw.js");
+  }
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    showInstallButton();
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    hideInstallButton();
+  });
+}
+
+function showInstallButton() {
+  elements.installButton.classList.remove("is-hidden");
+}
+
+function hideInstallButton() {
+  elements.installButton.classList.add("is-hidden");
 }
 
 function persistExpenses() {

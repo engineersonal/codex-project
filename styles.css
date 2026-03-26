@@ -267,6 +267,10 @@ body[data-theme="dark"] .filter-pill {
   font-weight: 800;
 }
 
+.install-button.is-hidden {
+  display: none;
+}
+
 .primary-button {
   color: #fff;
   background: linear-gradient(135deg, var(--primary), #ff8c54);

@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="128" fill="url(#bg)"/>
+  <rect x="64" y="64" width="384" height="384" rx="112" fill="url(#panel)" fill-opacity="0.22"/>
+  <path d="M168 140H254C321.379 140 376 194.621 376 262C376 329.379 321.379 384 254 384H168V140Z" fill="white" fill-opacity="0.96"/>
+  <path d="M168 140H255C289.794 140 318 168.206 318 203C318 237.794 289.794 266 255 266H168V140Z" fill="url(#accent)"/>
+  <circle cx="332" cy="174" r="38" fill="#FFC247"/>
+  <circle cx="332" cy="340" r="24" fill="#2ED7D0"/>
+  <defs>
+    <linearGradient id="bg" x1="58" y1="42" x2="428" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#131E45"/>
+      <stop offset="1" stop-color="#2A376A"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="88" y1="74" x2="402" y2="418" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DDE6FF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="168" y1="140" x2="318" y2="266" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF6B3D"/>
+      <stop offset="1" stop-color="#FF9A4D"/>
+    </linearGradient>
+  </defs>
+</svg>
