@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseSpend | Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <div class="brand-mark">P</div>
+        <div>
+          <p class="eyebrow">Daily finance</p>
+          <h1>PulseSpend</h1>
+        </div>
+      </div>
+
+      <nav class="nav-group" aria-label="Primary">
+        <button class="nav-item nav-item-active" type="button" data-view="overview" aria-pressed="true">Overview</button>
+        <button class="nav-item" type="button" data-view="transactions" aria-pressed="false">Transactions</button>
+        <button class="nav-item" type="button" data-view="budgets" aria-pressed="false">Budgets</button>
+        <button class="nav-item" type="button" data-view="insights" aria-pressed="false">Insights</button>
+      </nav>
+
+      <section class="sidebar-card">
+        <p class="eyebrow">Monthly target</p>
+        <h2 id="sidebarBudget">$3,200</h2>
+        <p class="muted">Use the budget input below to tune your ideal monthly ceiling.</p>
+      </section>
+
+      <section class="sidebar-card">
+        <p class="eyebrow">Preferences</p>
+        <label class="sidebar-label" for="countrySelect">
+          Country
+          <select id="countrySelect">
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="IN">India</option>
+            <option value="PL">Poland</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="CA">Canada</option>
+            <option value="AU">Australia</option>
+            <option value="JP">Japan</option>
+            <option value="AE">United Arab Emirates</option>
+          </select>
+        </label>
+        <button class="secondary-button sidebar-toggle" type="button" id="themeToggle">Switch to dark mode</button>
+      </section>
+
+      <section class="sidebar-card gradient-card">
+        <p class="eyebrow">Smart focus</p>
+        <h2 id="focusCategory">Dining</h2>
+        <p id="focusCopy">Your biggest category this month will appear here.</p>
+      </section>
+    </aside>
+
+    <main class="main-panel">
+      <header class="hero" id="heroSection">
+        <div>
+          <p class="eyebrow">Enterprise-grade personal finance</p>
+          <h2 id="heroTitle">Track every expense with clarity, rhythm, and color.</h2>
+          <p class="hero-copy" id="heroCopy">Log daily spending, monitor your monthly budget, and spot where your money is moving before it slips off course.</p>
+        </div>
+        <div class="hero-actions">
+          <div class="date-pill" id="todayLabel"></div>
+          <button class="primary-button" type="button" id="seedDataButton">Load sample data</button>
+        </div>
+      </header>
+
+      <section class="stats-grid" id="statsSection" aria-label="Summary metrics">
+        <article class="stat-card">
+          <p>Total spent</p>
+          <strong id="totalSpent">$0.00</strong>
+          <span id="spentTrend">0 transactions recorded</span>
+        </article>
+        <article class="stat-card accent-card">
+          <p>Remaining budget</p>
+          <strong id="remainingBudget">$0.00</strong>
+          <span id="budgetStatus">Set a monthly budget to start tracking.</span>
+        </article>
+        <article class="stat-card">
+          <p>Average daily spend</p>
+          <strong id="dailyAverage">$0.00</strong>
+          <span id="dailyAverageHint">Calculated from this month only.</span>
+        </article>
+        <article class="stat-card">
+          <p>Largest expense</p>
+          <strong id="largestExpense">$0.00</strong>
+          <span id="largestExpenseHint">Your top single transaction.</span>
+        </article>
+      </section>
+
+      <section class="content-grid" id="contentGrid">
+        <div class="panel" data-section="overview budgets">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Capture spending</p>
+              <h3>Add a transaction</h3>
+            </div>
+          </div>
+
+          <form id="expenseForm" class="expense-form">
+            <label>
+              Title
+              <input id="expenseTitle" name="title" type="text" placeholder="Team lunch, Groceries, Fuel" required>
+            </label>
+            <label>
+              Amount
+              <input id="expenseAmount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+            </label>
+            <label>
+              Category
+              <select id="expenseCategory" name="category" required>
+                <option value="Housing">Housing</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Health">Health</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Travel">Travel</option>
+                <option value="Education">Education</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+            <label>
+              Date
+              <input id="expenseDate" name="date" type="date" required>
+            </label>
+            <label class="full-span">
+              Notes
+              <input id="expenseNotes" name="notes" type="text" placeholder="Optional note for context">
+            </label>
+            <div class="form-actions full-span">
+              <button class="primary-button" type="submit">Save expense</button>
+              <p id="formMessage" class="form-message" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel" data-section="overview budgets">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Budget control</p>
+              <h3>Monthly budget</h3>
+            </div>
+          </div>
+
+          <form id="budgetForm" class="budget-form">
+            <label>
+              Budget amount
+              <input id="budgetInput" name="budget" type="number" min="0" step="0.01" placeholder="3200">
+            </label>
+            <button class="secondary-button" type="submit">Update budget</button>
+          </form>
+
+          <div class="progress-block">
+            <div class="progress-labels">
+              <span>Budget utilization</span>
+              <span id="budgetPercent">0%</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div class="progress-fill" id="budgetProgress"></div>
+            </div>
+          </div>
+
+          <div class="insight-list">
+            <article>
+              <span>Most active category</span>
+              <strong id="topCategory">No data yet</strong>
+            </article>
+            <article>
+              <span>Transactions this month</span>
+              <strong id="monthlyTransactions">0</strong>
+            </article>
+            <article>
+              <span>Recent spending streak</span>
+              <strong id="streakValue">0 days</strong>
+            </article>
+          </div>
+        </div>
+
+        <div class="panel chart-panel" data-section="overview insights">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Visual breakdown</p>
+              <h3>Category spend</h3>
+            </div>
+          </div>
+          <div id="chart" class="chart" aria-label="Category spend chart"></div>
+          <div id="chartLegend" class="legend"></div>
+        </div>
+
+        <div class="panel transactions-panel" data-section="overview transactions">
+          <div class="panel-header transactions-header">
+            <div>
+              <p class="eyebrow">Ledger</p>
+              <h3>Recent transactions</h3>
+            </div>
+            <label class="filter-pill">
+              <span>Filter</span>
+              <select id="categoryFilter" aria-label="Filter transactions by category">
+                <option value="All">All</option>
+                <option value="Housing">Housing</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Health">Health</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Travel">Travel</option>
+                <option value="Education">Education</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="transactionTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <template id="transactionRowTemplate">
+    <tr>
+      <td>
+        <div class="title-cell">
+          <strong class="transaction-title"></strong>
+          <span class="transaction-note"></span>
+        </div>
+      </td>
+      <td><span class="category-pill"></span></td>
+      <td class="transaction-date"></td>
+      <td class="transaction-amount"></td>
+      <td><button class="icon-button" type="button">Delete</button></td>
+    </tr>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
