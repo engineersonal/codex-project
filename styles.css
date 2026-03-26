@@ -59,6 +59,70 @@ body[data-theme="dark"] {
     linear-gradient(180deg, #07101f 0%, #0d162c 100%);
 }
 
+.app-notices {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  gap: 10px;
+  padding: 16px 24px 0;
+}
+
+.status-banner,
+.update-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14px 28px rgba(31, 42, 79, 0.1);
+  color: var(--text);
+  backdrop-filter: blur(14px);
+}
+
+.status-banner {
+  font-weight: 700;
+}
+
+.status-banner.is-offline {
+  background: rgba(255, 194, 71, 0.2);
+  border-color: rgba(255, 194, 71, 0.45);
+  color: #7a4d00;
+}
+
+.status-banner.is-online {
+  background: rgba(45, 206, 137, 0.18);
+  border-color: rgba(45, 206, 137, 0.4);
+  color: #0d6b48;
+}
+
+.update-action {
+  flex-shrink: 0;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+body[data-theme="dark"] .status-banner,
+body[data-theme="dark"] .update-banner {
+  background: rgba(14, 23, 44, 0.92);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+}
+
+body[data-theme="dark"] .status-banner.is-offline {
+  background: rgba(255, 194, 71, 0.16);
+  color: #ffd483;
+}
+
+body[data-theme="dark"] .status-banner.is-online {
+  background: rgba(45, 206, 137, 0.16);
+  color: #8ff0c0;
+}
+
 button,
 input,
 select {
@@ -571,6 +635,10 @@ body[data-theme="dark"] .sidebar .secondary-button {
 }
 
 @media (max-width: 1180px) {
+  .app-notices {
+    padding: 14px 16px 0;
+  }
+
   .app-shell {
     grid-template-columns: 1fr;
   }
@@ -598,6 +666,24 @@ body[data-theme="dark"] .sidebar .secondary-button {
 }
 
 @media (max-width: 720px) {
+  .app-notices {
+    gap: 8px;
+    padding: 12px 14px 0;
+  }
+
+  .status-banner,
+  .update-banner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 16px;
+    border-radius: 16px;
+  }
+
+  .update-action {
+    width: 100%;
+    justify-content: center;
+  }
+
   .app-shell {
     gap: 18px;
     padding: 14px;
@@ -811,6 +897,10 @@ body[data-theme="dark"] .sidebar .secondary-button {
 }
 
 @media (max-width: 460px) {
+  .app-notices {
+    padding: 10px 12px 0;
+  }
+
   .app-shell {
     padding: 12px;
   }

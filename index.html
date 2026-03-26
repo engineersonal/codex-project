@@ -17,6 +17,13 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="app-notices">
+    <div class="status-banner is-hidden" id="networkBanner" role="status" aria-live="polite"></div>
+    <div class="update-banner is-hidden" id="updateBanner" role="status" aria-live="polite">
+      <span>A new version of PulseSpend is ready.</span>
+      <button class="secondary-button update-action" type="button" id="refreshButton">Refresh now</button>
+    </div>
+  </div>
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand-block">

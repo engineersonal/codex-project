@@ -37,6 +37,7 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 const today = new Date();
 let deferredInstallPrompt = null;
+let newWorker = null;
 
 const state = {
   expenses: loadExpenses(),
@@ -60,6 +61,9 @@ const elements = {
   budgetForm: document.getElementById("budgetForm"),
   seedDataButton: document.getElementById("seedDataButton"),
   installButton: document.getElementById("installButton"),
+  networkBanner: document.getElementById("networkBanner"),
+  updateBanner: document.getElementById("updateBanner"),
+  refreshButton: document.getElementById("refreshButton"),
   categoryFilter: document.getElementById("categoryFilter"),
   navItems: document.querySelectorAll(".nav-item"),
   viewSections: document.querySelectorAll("[data-section]"),
@@ -105,6 +109,7 @@ function boot() {
   elements.budgetForm.addEventListener("submit", handleBudgetSubmit);
   elements.seedDataButton.addEventListener("click", handleSeedData);
   elements.installButton.addEventListener("click", handleInstallClick);
+  elements.refreshButton.addEventListener("click", handleRefreshClick);
   elements.countrySelect.addEventListener("change", handleCountryChange);
   elements.themeToggle.addEventListener("click", handleThemeToggle);
   elements.navItems.forEach((item) => {
@@ -117,6 +122,9 @@ function boot() {
     renderTransactions();
   });
 
+  window.addEventListener("online", () => updateNetworkBanner(true));
+  window.addEventListener("offline", () => updateNetworkBanner(false));
+  updateNetworkBanner(navigator.onLine);
   registerPwa();
   render();
 }
@@ -437,7 +445,29 @@ function applyTheme() {
 
 function registerPwa() {
   if ("serviceWorker" in navigator && window.isSecureContext) {
-    navigator.serviceWorker.register("./sw.js");
+    navigator.serviceWorker.register("./sw.js").then((registration) => {
+      if (registration.waiting) {
+        showUpdateBanner(registration.waiting);
+      }
+
+      registration.addEventListener("updatefound", () => {
+        const installingWorker = registration.installing;
+
+        if (!installingWorker) {
+          return;
+        }
+
+        installingWorker.addEventListener("statechange", () => {
+          if (installingWorker.state === "installed" && navigator.serviceWorker.controller) {
+            showUpdateBanner(installingWorker);
+          }
+        });
+      });
+    });
+
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      window.location.reload();
+    });
   }
 
   window.addEventListener("beforeinstallprompt", (event) => {
@@ -458,6 +488,47 @@ function showInstallButton() {
 
 function hideInstallButton() {
   elements.installButton.classList.add("is-hidden");
+}
+
+function updateNetworkBanner(isOnline) {
+  const banner = elements.networkBanner;
+
+  if (isOnline) {
+    banner.textContent = "Back online. PulseSpend is syncing with the latest app shell.";
+    banner.classList.remove("is-hidden", "is-offline");
+    banner.classList.add("is-online");
+
+    window.clearTimeout(updateNetworkBanner.timeoutId);
+    updateNetworkBanner.timeoutId = window.setTimeout(() => {
+      banner.classList.add("is-hidden");
+      banner.classList.remove("is-online");
+    }, 2600);
+    return;
+  }
+
+  window.clearTimeout(updateNetworkBanner.timeoutId);
+  banner.textContent = "You are offline. Saved expenses still work, and the app shell remains available.";
+  banner.classList.remove("is-hidden", "is-online");
+  banner.classList.add("is-offline");
+}
+
+function showUpdateBanner(worker) {
+  newWorker = worker;
+  elements.updateBanner.classList.remove("is-hidden");
+}
+
+function hideUpdateBanner() {
+  newWorker = null;
+  elements.updateBanner.classList.add("is-hidden");
+}
+
+function handleRefreshClick() {
+  if (!newWorker) {
+    return;
+  }
+
+  newWorker.postMessage({ type: "SKIP_WAITING" });
+  hideUpdateBanner();
 }
 
 function persistExpenses() {

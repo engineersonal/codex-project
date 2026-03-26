@@ -104,6 +104,8 @@ PWA features include:
 - app manifest metadata
 - cached app shell for offline loading of the main interface
 - custom app icon for install surfaces
+- offline/online status feedback
+- update-ready prompt when a new service worker version is available
 
 ## How to Run
 
