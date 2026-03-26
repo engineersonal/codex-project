@@ -242,16 +242,16 @@
 
   <template id="transactionRowTemplate">
     <tr>
-      <td>
+      <td data-label="Title">
         <div class="title-cell">
           <strong class="transaction-title"></strong>
           <span class="transaction-note"></span>
         </div>
       </td>
-      <td><span class="category-pill"></span></td>
-      <td class="transaction-date"></td>
-      <td class="transaction-amount"></td>
-      <td><button class="icon-button" type="button">Delete</button></td>
+      <td data-label="Category"><span class="category-pill"></span></td>
+      <td class="transaction-date" data-label="Date"></td>
+      <td class="transaction-amount" data-label="Amount"></td>
+      <td data-label="Action"><button class="icon-button" type="button">Delete</button></td>
     </tr>
   </template>
 

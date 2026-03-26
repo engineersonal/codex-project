@@ -71,6 +71,7 @@ select {
   gap: 24px;
   min-height: 100vh;
   padding: 24px;
+  align-items: start;
 }
 
 .sidebar,
@@ -89,6 +90,10 @@ select {
   color: #f7f8ff;
   border-radius: 32px;
   box-shadow: var(--shadow);
+}
+
+.sidebar > * {
+  min-width: 0;
 }
 
 .brand-block {
@@ -193,6 +198,7 @@ select {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  min-width: 0;
 }
 
 .hero {
@@ -235,6 +241,10 @@ body[data-theme="dark"] .hero {
   color: var(--text);
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid var(--border);
+}
+
+.filter-pill select {
+  min-width: 112px;
 }
 
 body[data-theme="dark"] .date-pill,
@@ -339,6 +349,7 @@ body[data-theme="dark"] .filter-pill {
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+  min-width: 0;
 }
 
 .panel-header,
@@ -456,6 +467,8 @@ body[data-theme="dark"] .insight-list article {
   gap: 12px;
   min-height: 240px;
   margin-top: 24px;
+  overflow-x: auto;
+  padding-bottom: 8px;
 }
 
 .chart-bar-group {
@@ -464,6 +477,7 @@ body[data-theme="dark"] .insight-list article {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  min-width: 72px;
 }
 
 .chart-bar {
@@ -558,7 +572,8 @@ body[data-theme="dark"] .sidebar .secondary-button {
   }
 
   .sidebar {
-    order: 2;
+    order: 0;
+    padding: 22px;
   }
 
   .stats-grid {
@@ -568,18 +583,28 @@ body[data-theme="dark"] .sidebar .secondary-button {
   .content-grid {
     grid-template-columns: 1fr;
   }
+
+  .nav-group {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sidebar-card {
+    padding: 18px;
+  }
 }
 
 @media (max-width: 720px) {
   .app-shell {
-    padding: 16px;
+    gap: 18px;
+    padding: 14px;
   }
 
   .hero,
   .panel,
   .stat-card,
   .sidebar {
-    padding: 20px;
+    padding: 18px;
+    border-radius: 24px;
   }
 
   .hero,
@@ -594,5 +619,223 @@ body[data-theme="dark"] .sidebar .secondary-button {
   .stats-grid,
   .expense-form {
     grid-template-columns: 1fr;
+  }
+
+  .brand-block {
+    padding-bottom: 4px;
+  }
+
+  .brand-mark {
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+  }
+
+  .sidebar {
+    gap: 14px;
+  }
+
+  .nav-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-item {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .sidebar-card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .hero h2 {
+    font-size: 1.7rem;
+    line-height: 1.1;
+  }
+
+  .hero-copy {
+    font-size: 0.96rem;
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    gap: 10px;
+  }
+
+  .date-pill,
+  .primary-button,
+  .secondary-button,
+  .sidebar-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .panel-header h3,
+  .hero h2 {
+    max-width: 100%;
+  }
+
+  .panel-header,
+  .transactions-header {
+    gap: 16px;
+  }
+
+  .filter-pill {
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 16px;
+  }
+
+  .filter-pill select {
+    min-width: 0;
+    width: auto;
+    flex: 1;
+    text-align: right;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .stat-card strong {
+    font-size: 1.7rem;
+  }
+
+  .insight-list article {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progress-labels {
+    gap: 8px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chart {
+    gap: 14px;
+    min-height: 220px;
+    margin-top: 18px;
+  }
+
+  .chart-bar-group {
+    min-width: 64px;
+  }
+
+  .chart-bar {
+    min-width: 28px;
+  }
+
+  .legend-item {
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(241, 244, 252, 0.72);
+  }
+
+  body[data-theme="dark"] .legend-item {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .transactions-panel .table-wrap {
+    overflow: visible;
+  }
+
+  .transactions-panel table,
+  .transactions-panel thead,
+  .transactions-panel tbody,
+  .transactions-panel tr,
+  .transactions-panel td {
+    display: block;
+    width: 100%;
+  }
+
+  .transactions-panel thead {
+    display: none;
+  }
+
+  .transactions-panel tbody {
+    display: grid;
+    gap: 14px;
+  }
+
+  .transactions-panel tr {
+    padding: 16px;
+    border: 1px solid rgba(117, 131, 179, 0.16);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 10px 24px rgba(31, 42, 79, 0.08);
+  }
+
+  body[data-theme="dark"] .transactions-panel tr {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .transactions-panel td {
+    padding: 0;
+    border: 0;
+  }
+
+  .transactions-panel td + td {
+    margin-top: 12px;
+  }
+
+  .transactions-panel td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .transactions-panel .title-cell {
+    gap: 6px;
+  }
+
+  .transactions-panel .icon-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .empty-state {
+    padding: 20px 8px;
+  }
+}
+
+@media (max-width: 460px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .hero,
+  .panel,
+  .stat-card,
+  .sidebar {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .nav-group {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h2 {
+    font-size: 1.5rem;
+  }
+
+  .stat-card strong {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-label select,
+  input,
+  select,
+  .primary-button,
+  .secondary-button {
+    min-height: 46px;
   }
 }
